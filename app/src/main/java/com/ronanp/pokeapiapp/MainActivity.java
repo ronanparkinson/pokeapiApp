@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import adapter.DataAdapter;
-import model.AndroidVersion;
-import model.ApiInterface;
-import model.JSONResponce;
+import model.Pokemon;
+import model.PokemonResponce;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<AndroidVersion> data;
+    private ArrayList<PokemonResponce> data;
     private DataAdapter adapter;
 
     @Override
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<JSONResponce> call, Response<JSONResponce> response) {
 
                 JSONResponce jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getAndroid()));
+                data = new ArrayList<>(Arrays.asList(jsonResponse.getPokemon()));
                 adapter = new DataAdapter(data);
                 recyclerView.setAdapter(adapter);
             }

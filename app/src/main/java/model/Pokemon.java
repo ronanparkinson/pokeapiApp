@@ -1,8 +1,13 @@
 package model;
 
-public class AndroidVersion {
+public class Pokemon{
     private String pokeName;
     private String pokeUrl;
+
+    public Pokemon(String pokeName, String pokeUrl) {
+        this.pokeName = pokeName;
+        this.pokeUrl = pokeUrl;
+    }
 
     public String getPokeName() {
         return pokeName;

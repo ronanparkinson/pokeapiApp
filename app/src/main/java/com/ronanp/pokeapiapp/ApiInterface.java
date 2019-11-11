@@ -1,4 +1,4 @@
-package model;
+package com.ronanp.pokeapiapp;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
