@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<PokemonResponce> data;
+    private java.util.List<model.Pokemon> data;
     private DataAdapter adapter;
 
     @Override
@@ -34,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.card_recycler_view);
-        recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new DataAdapter();
+        recyclerView.setAdapter(adapter);
+
         loadJSON();
     }
 
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PokemonResponce> call, Response<PokemonResponce> response) {
                   PokemonResponce pokemonResponce = response.body();
-                  data = new ArrayList<PokemonResponce>(pokemonResponce.getCount());
-                  adapter = new DataAdapter(data);
-                  recyclerView.setAdapter(adapter);
+                  if (pokemonResponce != null) {
+                      adapter.refreshData(pokemonResponce.getResults());
+                  }
             }
 
             @Override
