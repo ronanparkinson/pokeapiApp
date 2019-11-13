@@ -1,27 +1,27 @@
 package model;
 
 public class Pokemon{
-    private String pokeName;
-    private String pokeUrl;
+    private String name;
+    private String url;
 
-    public Pokemon(String pokeName, String pokeUrl) {
-        this.pokeName = pokeName;
-        this.pokeUrl = pokeUrl;
+    public Pokemon(String name, String url) {
+        this.name = name;
+        this.url = url;
     }
 
-    public String getPokeName() {
-        return pokeName;
+    public String getName() {
+        return name;
     }
 
-    public void setPokeName(String pokeName) {
-        this.pokeName = pokeName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPokeUrl() {
-        return pokeUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPokeUrl(String pokeUrl) {
-        this.pokeUrl = pokeUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

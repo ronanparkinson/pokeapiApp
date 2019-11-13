@@ -7,15 +7,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ronanp.pokeapiapp.R;
 import java.util.ArrayList;
+
 import model.Pokemon;
-import model.PokemonResponce;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
-    private ArrayList<PokemonResponce> pokemonResponces;
+    private java.util.List<Pokemon> pokemonResponces = new ArrayList<Pokemon>();
 
 
-    public DataAdapter(ArrayList<PokemonResponce> pokemonResponces) {
-        this.pokemonResponces = pokemonResponces;
+    public DataAdapter() {
     }
 
     @Override
@@ -26,13 +25,19 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
-        holder.poke_name.setText(pokemonResponces.get(position).getNext());
-        holder.poke_url.setText(pokemonResponces.get(position).getNext());
+        holder.poke_name.setText(pokemonResponces.get(position).getName());
+        holder.poke_url.setText(pokemonResponces.get(position).getUrl());
     }
 
     @Override
     public int getItemCount() {
         return pokemonResponces.size();
+    }
+
+    public void refreshData(java.util.List<model.Pokemon> data) {
+        pokemonResponces.clear();
+        pokemonResponces.addAll(data);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
