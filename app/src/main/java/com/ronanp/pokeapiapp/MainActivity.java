@@ -42,23 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadJSON() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/")
+                .baseUrl("https://pokeapi.co")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        ApiInterface request = retrofit.create(ApiInterface.class);
-        Call<JSONResponce> call = request.getJSON();
-        call.enqueue(new Callback<JSONResponce>() {
+        final ApiInterface request = retrofit.create(ApiInterface.class);
+        Call<PokemonResponce> call = request.getJSON();
+        call.enqueue(new Callback<PokemonResponce>() {
             @Override
-            public void onResponse(Call<JSONResponce> call, Response<JSONResponce> response) {
-
-                JSONResponce jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getPokemon()));
-                adapter = new DataAdapter(data);
-                recyclerView.setAdapter(adapter);
+            public void onResponse(Call<PokemonResponce> call, Response<PokemonResponce> response) {
+                  PokemonResponce pokemonResponce = response.body();
+                  data = new ArrayList<PokemonResponce>(pokemonResponce.getCount());
+                  adapter = new DataAdapter(data);
+                  recyclerView.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<JSONResponce> call, Throwable t) {
+            public void onFailure(Call<PokemonResponce> call, Throwable t) {
                 Log.d("Error", t.getMessage());
             }
         });
