@@ -12,7 +12,15 @@ import model.Pokemon;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private java.util.List<Pokemon> pokemonResponces = new ArrayList<Pokemon>();
+    private onItemClickListener listener;
 
+    public interface onItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener){
+        this.listener = listener;
+    }
 
     public DataAdapter() {
     }
@@ -49,6 +57,18 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
             poke_name = (TextView)itemView.findViewById(R.id.poke_name);
             poke_url = (TextView)itemView.findViewById(R.id.poke_url);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
