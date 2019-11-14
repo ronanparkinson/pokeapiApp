@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +22,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements DataAdapter.onItemClickListener{
+    public static final String Name = "name";
+    public static final String URL = "url";
     private RecyclerView recyclerView;
     private java.util.List<model.Pokemon> data;
     private DataAdapter adapter;
@@ -38,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new DataAdapter();
         recyclerView.setAdapter(adapter);
-
         loadJSON();
     }
 
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                   if (pokemonResponce != null) {
                       adapter.refreshData(pokemonResponce.getResults());
                   }
+                  adapter.setOnItemClickListener(MainActivity.this);
             }
 
             @Override
@@ -63,5 +67,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, ApiInterface.class);
+        Pokemon pokemon = data.get(position);
+        intent.putExtra(Name, pokemon.getName());
+        intent.putExtra(URL, pokemon.getUrl());
+
+        startActivity(intent);
     }
 }
